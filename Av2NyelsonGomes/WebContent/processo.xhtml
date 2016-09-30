@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://xmlns.jcp.org/jsf/html" 
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head/>
+<f:metadata>
+	<f:viewParam name="processoId" value="#{processoBean.processoId}"/>
+	<f:viewAction if="#{param.processoId != null}" action="#{processoBean.carregarPeloId}"/>
+</f:metadata>
+<ui:composition template="layoutPadrao.xhtml">
+	<ui:define name="titulo">Lista de Processos</ui:define>
+	<ui:define name="conteudo">		
+		<br/>
+		<h:form>
+			<p:fieldset legend="Processo">					
+				<p:outputLabel value="Fiscal Responsável: " for="fiscalResponsavel" />
+				<p:inputText id="fiscalResponsavel" value="#{processoBean.processo.fiscalResponsavel}" 
+						required="true" requiredMessage="Fiscal Responsável obrigatório">
+				</p:inputText>	
+				<p:message id="fiscalResponsavel-message" for="fiscalResponsavel"/>
+				<br/>
+				<p:outputLabel value="Relato Fiscalização:" for="relatoFiscalizacao" />
+				<p:inputText id="relatoFiscalizacao" value="#{processoBean.processo.relatoFiscalizacao}" 
+						required="true" requiredMessage="Relato Fiscalização obrigatório">
+				</p:inputText>	
+				<p:message id="relatoFiscalizacao-message" for="relatoFiscalizacao"/>
+				<br/>					
+					
+				<p:outputLabel value="CNPJ do Fornecedor:" for="cnpj" />
+				<p:inputMask id="cnpj" value="#{processoBean.processo.fornecedor.cnpj}" mask="99.999.999/9999-99" required="true" requiredMessage="CNPJ Obrigatório"/>
+						
+				<h:commandButton value="Buscar Fornecedor" action="#{processoBean.buscar}">
+					<f:ajax execute="@form" render="@form" />
+				</h:commandButton>
+				<p:message id="cnpj-message" for="cnpj"></p:message>
+				<br />
+
+				<div id="div-fornecedor" style="margin-top: 2px;">
+
+					<p:outputLabel value="Fornecedor ID: " for="id" />
+					<p:inputText id="id" value="#{processoBean.processo.fornecedor.id}"
+						readonly="true" />
+					<br />
+
+					<p:outputLabel value="Razão Social: " for="razaoSocial" />
+					<p:inputText id="razaoSocial"
+						value="#{processoBean.processo.fornecedor.razaoSocial}"
+						readonly="true" />
+					<br />
+
+					<p:outputLabel value="UF: " for="uf" />
+					<p:inputText id="uf"
+						value="#{processoBean.processo.fornecedor.endereco.uf}"
+						readonly="true" />
+					<br />
+
+					<p:outputLabel value="Município: " for="municipio" />
+					<p:inputText id="municipio"
+						value="#{processoBean.processo.fornecedor.endereco.municipio}"
+						readonly="true" />
+					<br />
+
+					<p:outputLabel value="Bairro: " for="bairro" />
+					<p:inputText id="bairro"
+						value="#{processoBean.processo.fornecedor.endereco.bairro}"
+						readonly="true" />
+					<br />
+
+					<p:outputLabel value="CEP: " for="cep" />
+					<p:inputText id="cep"
+						value="#{processoBean.processo.fornecedor.endereco.cep}"
+						readonly="true" />
+					<br />
+
+					<p:outputLabel value="Logradouro: " for="logradouro" />
+					<p:inputText id="logradouro"
+						value="#{processoBean.processo.fornecedor.endereco.logradouro}"
+						readonly="true" />
+					<br />
+				</div>
+				<br />
+				<p:messages  globalOnly="true" />
+				<h:commandButton value="Gravar" action="#{processoBean.persistir}">
+					<f:ajax execute="@form" render="@all"/>
+				</h:commandButton>				
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

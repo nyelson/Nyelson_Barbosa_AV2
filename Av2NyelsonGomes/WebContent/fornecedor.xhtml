@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:h="http://xmlns.jcp.org/jsf/html" 
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head/>
+<f:metadata>
+	<f:viewParam name="fornecedorId" value="#{fornecedorBean.fornecedorId}"/>
+	<f:viewAction if="#{param.fornecedorId != null}" action="#{fornecedorBean.carregarFornecedorPeloId}"/>
+</f:metadata>
+<ui:composition template="layoutPadrao.xhtml">
+	<ui:define name="titulo">Formulário de Fornecedor</ui:define>
+	<ui:define name="conteudo">	
+		<br/>	
+		<h:form>
+			<br />
+			<p:fieldset legend="Dados do Fornecedor">
+			
+				<p:outputLabel value="CNPJ:" for="cnpj"/>
+				<p:inputMask id="cnpj" value="#{fornecedorBean.fornecedor.cnpj}" 
+				mask="99.999.999/9999-99" required="true" requiredMessage="CNPJ Obrigatório"/>
+				<p:message for="cnpj"/>
+				<br/>
+				
+				<p:outputLabel value="Inscrição Municipal:" for="inscricaoMunicipal"/>					
+				<p:inputMask id="inscricaoMunicipal" value="#{fornecedorBean.fornecedor.inscricaoMunicipal}"
+				mask="9.999.999-9" required="true" requiredMessage="Inscrição Municipal Obrigatório" />
+				<p:message for="inscricaoMunicipal"/>
+				<br/>
+				
+				<p:outputLabel value="Razão Social:" for="razaoSocial"/>					
+				<p:inputText id="razaoSocial" value="#{fornecedorBean.fornecedor.razaoSocial}" 
+				required="true" requiredMessage="Razão Social Obrigatório" maxlength="200"/>
+				<p:message for="razaoSocial"/>
+				<br/>
+				
+				<p:outputLabel value="Receita Bruta:" for="receitaBruta"/>					
+				<p:inputNumber id="receitaBruta" value="#{fornecedorBean.fornecedor.receitaBruta}" 
+					required="true" requiredMessage="Receita Bruta Obrigatório"/>
+				<p:message for="receitaBruta"/>		
+				<br/>		
+							
+				<p:outputLabel value="UF: " for="uf"/>
+				<h:selectOneMenu id="uf" value="#{fornecedorBean.fornecedor.endereco.uf}"
+					required="true" requiredMessage="UF obrigatório">	
+					<f:selectItems value="#{fornecedorBean.ufs}"/>		
+				</h:selectOneMenu>
+				<p:message for="uf"/>
+				<br/>
+				
+				<p:outputLabel value="Município: " for="municipio"/>
+				<p:inputText id="municipio" value="#{fornecedorBean.fornecedor.endereco.municipio}"
+					required="true" requiredMessage="Município obrigatório" maxlength="200"/>
+				<p:message for="municipio"/>
+				<br/>
+				
+				<p:outputLabel value="Bairro: " for="bairro"/>
+				<p:inputText id="bairro" value="#{fornecedorBean.fornecedor.endereco.bairro}"
+					required="true" requiredMessage="Bairro obrigatório" maxlength="100"/>
+				<p:message for="bairro"/>
+				<br/>
+				
+				<p:outputLabel value="CEP: " for="cep"/>
+				<p:inputMask id="cep" value="#{fornecedorBean.fornecedor.endereco.cep}"
+					required="true" requiredMessage="CEP Obrigatório" mask="99.999-999"/>
+				<p:message for="cep"/>
+				<br/>
+				
+				<p:outputLabel value="Logradouro: " for="logradouro"/>
+				<p:inputText id="logradouro" value="#{fornecedorBean.fornecedor.endereco.logradouro}"
+					required="true" requiredMessage="Logradouro obrigatório" maxlength="100"/>
+				<p:message for="logradouro" id="logradouro-message"/>
+				<br/>
+				
+				<p:outputLabel value="Número: " for="numero"/>
+				<p:inputText id="numero" value="#{fornecedorBean.fornecedor.endereco.numero}"
+					required="true" requiredMessage="Número obrigatório" maxlength="50" />
+				<p:message for="numero" id="numero-message"/>
+				<br/>
+				
+				<p:outputLabel value="Complemento: " for="complemento"/>
+				<p:inputText id="complemento" value="#{fornecedorBean.fornecedor.endereco.complemento}" maxlength="50"/>
+				<p:message for="complemento" id="complemento-message"/>	
+				<br/>				
+					
+				<p:messages  globalOnly="true" />
+				<p:commandButton value="Salvar" action="#{fornecedorBean.persistir}" process="@form" update="@form" />
+			</p:fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
